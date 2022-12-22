@@ -6,15 +6,21 @@ const Login = ({navigation}) => {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
+  let bearerToken = '';
+
   const loginData = {
-    username,
-    password,
+    username: username,
+    password: password,
   };
 
   const handleLogin = () => {
     axios
       .post('https://staging-api.tracknerd.io/v1/auth/login', loginData)
-      .then(res => console.log(res));
+      .then(res => {
+        console.log(res);
+        bearerToken = res?.data?.token;
+        navigation?.navigate('Home', {bearerToken});
+      });
   };
 
   return (
