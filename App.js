@@ -6,6 +6,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './src/screens/Login';
 import HomeScreen from './src/screens/HomeScreen';
 import VehicleDetailPage from './src/screens/VehicleDetailPage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Background from './src/screens/Background';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +18,7 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name="Background" component={Background} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="VehicleDetailPage" component={VehicleDetailPage} />

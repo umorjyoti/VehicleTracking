@@ -1,6 +1,8 @@
 import {firebase} from '@react-native-firebase/database';
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StatusBar} from 'react-native';
+// import MapView from 'react-native-maps';
+import styles from './styles';
 
 const VehicleDetailPage = ({navigation, route}) => {
   const {item} = route?.params;
@@ -20,8 +22,11 @@ const VehicleDetailPage = ({navigation, route}) => {
       messagingSenderId: '1',
       projectId: '1:847967007196:web:ae4df284f5560af4139f19',
     };
-
-    await firebase.initializeApp(firebaseConfig);
+    try {
+      await firebase.initializeApp(firebaseConfig);
+    } catch (e) {
+      console.log(e);
+    }
 
     const database = firebase.database();
     const vehicleRef = database.ref(
@@ -35,8 +40,16 @@ const VehicleDetailPage = ({navigation, route}) => {
   };
 
   return (
-    <View>
-      <Text>hello</Text>
+    <View style={styles.detailPageContainer}>
+      <StatusBar barStyle={'dark-content'} backgroundColor={'#FAFAFA'} />
+      <View>
+        {/* <MapView
+          initialRegion={{
+            latitude: location?.latitude,
+            longitude: location?.longitude,
+          }}
+        /> */}
+      </View>
     </View>
   );
 };
