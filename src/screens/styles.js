@@ -100,6 +100,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FAFAFA',
   },
+  map: {
+    height: hp(100),
+  },
+  detailPageLoading: {
+    height: hp(20),
+    width: hp(100),
+    alignSelf: 'center',
+  },
+  marker: {
+    height: hp(10),
+  },
   //LoginPage
   errorMessage: {
     color: 'white',

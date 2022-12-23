@@ -87,6 +87,7 @@ const Login = ({navigation}) => {
       <View style={styles.usernameContainer}>
         <Image style={styles.loginIcon} source={lock} resizeMode="contain" />
         <TextInput
+          secureTextEntry={true}
           style={styles.username}
           onChangeText={val => {
             setPassword(val);

@@ -53,6 +53,9 @@ const HomeScreen = ({navigation, route}) => {
         });
         setVehicleData([...vehicleData]);
         setVehicleDataDuplicate([...vehicleData]);
+      })
+      .catch(() => {
+        navigation.replace('Login');
       });
     setLoading(false);
   };

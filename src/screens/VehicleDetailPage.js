@@ -1,18 +1,23 @@
 import {firebase} from '@react-native-firebase/database';
+import LottieView from 'lottie-react-native';
 import React, {useEffect, useState} from 'react';
-import {View, Text, StatusBar} from 'react-native';
-// import MapView from 'react-native-maps';
+import {View, Text, StatusBar, Image} from 'react-native';
+import MapView, {Marker} from 'react-native-maps';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
+import {car} from '../constants/image';
 import styles from './styles';
 
 const VehicleDetailPage = ({navigation, route}) => {
   const {item} = route?.params;
   const [location, setLocation] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     SubscribeToRealTimeData();
-  }, []);
+  }, [location?.latitude, location?.longitude]);
 
   const SubscribeToRealTimeData = async () => {
+    setLoading(true);
     const firebaseConfig = {
       apiKey: 'AIzaSyDahAZLP3Fe68j9C-7ZT9i0nAqiQWXhs_4',
       authDomain: 'tracknerd-staging.firebaseapp.com',
@@ -37,19 +42,42 @@ const VehicleDetailPage = ({navigation, route}) => {
       console.log('snap', snapshot);
       setLocation(snapshot?._snapshot?.value);
     });
+    setLoading(false);
   };
 
   return (
     <View style={styles.detailPageContainer}>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'#FAFAFA'} />
-      <View>
-        {/* <MapView
-          initialRegion={{
-            latitude: location?.latitude,
-            longitude: location?.longitude,
-          }}
-        /> */}
-      </View>
+      {loading ? (
+        <LottieView
+          source={require('../assets/json/loginLoading.json')}
+          autoPlay
+          loop
+          style={styles.detailPageLoading}
+        />
+      ) : (
+        <View>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: location?.latitude ? location?.latitude : 13.036754,
+              longitude: location?.longitude ? location?.longitude : 77.437224,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}>
+            <Marker
+              draggable
+              coordinate={{
+                latitude: location?.latitude ? location?.latitude : 13.036754,
+                longitude: location?.longitude
+                  ? location?.longitude
+                  : 77.437224,
+              }}
+              title="Location">
+              <Image source={car} resizeMode="contain" style={styles.marker} />
+            </Marker>
+          </MapView>
+        </View>
+      )}
     </View>
   );
 };
