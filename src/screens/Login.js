@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LottieView from 'lottie-react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -15,10 +15,12 @@ import {check, lock, user} from '../constants/image';
 import styles from './styles';
 
 const Login = ({navigation}) => {
-  const [username, setUserName] = useState('ganesh@arvee.co.in');
-  const [password, setPassword] = useState('tracknerd@123');
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [disableLogin, setDisableLogin] = useState(true);
 
   let bearerToken = '';
 
@@ -26,6 +28,10 @@ const Login = ({navigation}) => {
     username: username,
     password: password,
   };
+
+  useEffect(() => {
+    validateUserCredentials(username, password);
+  }, [username, password]);
 
   const handleLogin = async () => {
     setLoading(true);
@@ -37,7 +43,11 @@ const Login = ({navigation}) => {
         if (!!rememberMe) {
           setItemToLocalStorage(bearerToken);
         }
+        setShowErrorMessage(false);
         navigation.replace('Home', {bearerToken});
+      })
+      .catch(() => {
+        setShowErrorMessage(true);
       });
     setLoading(false);
   };
@@ -51,6 +61,14 @@ const Login = ({navigation}) => {
     console.log(AsyncStorage.getItem('token'));
   };
 
+  const validateUserCredentials = (username, password) => {
+    if (username == '' || password == '') {
+      setDisableLogin(true);
+    } else {
+      setDisableLogin(false);
+    }
+  };
+
   return (
     <View style={styles.loginPageContainer}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'#576cd6'} />
@@ -59,7 +77,9 @@ const Login = ({navigation}) => {
         <Image style={styles.loginIcon} source={user} resizeMode="contain" />
         <TextInput
           style={styles.username}
-          onChangeText={setUserName}
+          onChangeText={val => {
+            setUserName(val);
+          }}
           value={username}
           placeholder={'Username'}
         />
@@ -68,11 +88,16 @@ const Login = ({navigation}) => {
         <Image style={styles.loginIcon} source={lock} resizeMode="contain" />
         <TextInput
           style={styles.username}
-          onChangeText={setPassword}
+          onChangeText={val => {
+            setPassword(val);
+          }}
           value={password}
           placeholder={'Password'}
         />
       </View>
+      {showErrorMessage && (
+        <Text style={styles.errorMessage}>Username or Password Incorrect</Text>
+      )}
       <View style={styles.rememberMe}>
         <TouchableOpacity onPress={onPressRememberME} style={styles.checkbox}>
           {rememberMe && (
@@ -86,6 +111,7 @@ const Login = ({navigation}) => {
         <Text style={styles.rememberMeText}>Remember Me</Text>
       </View>
       <TouchableOpacity
+        disabled={disableLogin}
         onPress={() => {
           handleLogin();
         }}

@@ -72,8 +72,10 @@ const HomeScreen = ({navigation, route}) => {
     } else {
       let tempArr = vehicleDataDuplicate?.filter(
         item =>
-          item?.registrationNumber?.toLowerCase().indexOf(val?.toLowerCase()) >
-          -1,
+          item?.registrationNumber
+            ?.replace(/\s/g, '')
+            ?.toLowerCase()
+            .indexOf(val?.replace(/\s/g, '')?.toLowerCase()) > -1,
       );
 
       setVehicleData([...tempArr]);

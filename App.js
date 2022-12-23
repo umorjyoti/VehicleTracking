@@ -17,7 +17,8 @@ const App = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-        }}>
+        }}
+        initialRouteName={'Background'}>
         <Stack.Screen name="Background" component={Background} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={HomeScreen} />

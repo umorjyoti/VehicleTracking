@@ -6,6 +6,12 @@ import {
 } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
+  //SplashScreen
+  splashScreen: {
+    height: hp(20),
+    width: wp(70),
+    alignSelf: 'center',
+  },
   //Home Page Styles
   searchBar: {
     borderWidth: 1,
@@ -95,6 +101,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
   },
   //LoginPage
+  errorMessage: {
+    color: 'white',
+    fontSize: hp(2.2),
+    backgroundColor: 'rgba(255,0,0,0.4)',
+    paddingVertical: hp(0.3),
+    paddingHorizontal: wp(4),
+    borderRadius: 10,
+  },
   loginPageContainer: {
     flex: 1,
     backgroundColor: '#576cd6',
