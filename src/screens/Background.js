@@ -8,7 +8,7 @@ const Background = ({navigation}) => {
     if (token) {
       navigation.replace('Home', {bearerToken: token});
     } else {
-      navigation.navigate('Login');
+      navigation.replace('Login');
     }
   };
   useEffect(() => {

@@ -7,9 +7,26 @@ import {
 
 const styles = StyleSheet.create({
   //Home Page Styles
+  searchBar: {
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginHorizontal: wp(4),
+    height: hp(5),
+    marginBottom: hp(2),
+    borderRadius: 15,
+    paddingHorizontal: wp(2),
+    alignItems: 'center',
+  },
+  searchIcon: {height: hp(3), width: hp(3), marginRight: wp(2)},
+  searchText: {fontSize: hp(2.2), color: '#000000', borderWidth: 1},
   homePageContainer: {
     backgroundColor: '#FAFAFA',
     flex: 1,
+  },
+  homeLoading: {
+    height: hp(20),
+    width: hp(20),
+    alignSelf: 'center',
   },
   header: {
     color: '#000000',

@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AnimatedLottieView from 'lottie-react-native';
+import LottieView from 'lottie-react-native';
 import React, {useState} from 'react';
 import {
   View,
@@ -27,10 +27,9 @@ const Login = ({navigation}) => {
     password: password,
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setLoading(true);
-    console.log(loading);
-    axios
+    await axios
       .post('https://staging-api.tracknerd.io/v1/auth/login', loginData)
       .then(res => {
         console.log(res);
@@ -87,10 +86,12 @@ const Login = ({navigation}) => {
         <Text style={styles.rememberMeText}>Remember Me</Text>
       </View>
       <TouchableOpacity
-        onPress={() => handleLogin()}
+        onPress={() => {
+          handleLogin();
+        }}
         style={styles.submitButton}>
         {!!loading ? (
-          <AnimatedLottieView
+          <LottieView
             source={require('../assets/json/loginLoading.json')}
             autoPlay
             loop
